@@ -42,13 +42,13 @@ const routes = [
 //     })
 //   },
 
-//   {
-//     path: ["/dang-nhap"],
-//     component: Loadable({
-//       loader: () => import('./sites/user/containners/account/Login'),
-//       loading: Loading,
-//     })
-//   },
+  {
+    path: ["/dang-nhap"],
+    component: Loadable({
+      loader: () => import('./sites/admin/components/account/login'),
+      loading: Loading,
+    })
+  },
 
   {
     path: ["/admin", "/admin/:function", "/admin/:function/:id"],

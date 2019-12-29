@@ -1,10 +1,10 @@
 import axios from 'axios';
-const server_url = "http://27.72.147.222:5010" ; //dev
+const server_url = "https://localhost:44307" ; //dev
 // const server_url = "http://123.24.206.9:8000"; //test
 // const server_url = "https://api.produce.isofhcare.com"; //release
 // const server_url = "http://34.95.91.81"; //stable
 
-const resource_url = "https://www.googleapis.com/download/storage/v1/b/isofh-care-dev/o/"; //dev
+const resource_url = "https://localhost:44307"; //dev
 // const resource_url = "https://www.googleapis.com/download/storage/v1/b/isofh-care-dev/o/"; //test
 // const resource_url = "https://www.googleapis.com/download/storage/v1/b/isofh-care-stable/o/"; //stable
 // const resource_url = "https://www.googleapis.com/download/storage/v1/b/isofhcare-storage/o/"; //release

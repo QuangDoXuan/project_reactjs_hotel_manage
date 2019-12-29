@@ -1,17 +1,18 @@
 import React from 'react'
 import userProvider from '../../../../data-access/user-provider'
-
+import './style.css'
 import axios from 'axios';
-class Dashboard extends React.Component{
-    constructor(props){
+// import { Resizable, ResizableBox } from 'react-resizable';
+class Dashboard extends React.Component {
+    constructor(props) {
         super(props)
     }
 
-    componentDidMount(){
+    componentDidMount() {
 
     }
 
-    login= ()=>{
+    login = () => {
         // axios.post("http://27.72.147.222:5010/api/v1/auth/login").then(res=>{
         //     console.log(res)
         // }).catch(e=>{
@@ -25,17 +26,11 @@ class Dashboard extends React.Component{
         // })
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div className="content-area">
-            {/* <form>
-                <input type="text" onChange={(event)=>this.setState({email:event.target.value})}/>
-                <input type="password" onChange={(event)=>this.setState({password:event.target.value})}/>
-            </form>
-            <button onClick={this.login}>
-                Đăng nhập
-            </button> */}
-            </div>
+                Dashboard
+            </div >
         )
     }
 }
