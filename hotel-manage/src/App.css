@@ -1,0 +1,58 @@
+html,body{
+  width: 100%;
+  height: 100%;
+}
+#root, .kernel, .land-master,.app,.app-body{
+  width: 100%;
+  height: 100%;
+}
+.app-body{
+  position: relative;
+  display: flex;
+  height:calc(100% - 56px)
+}
+.header-admin{
+    height: 56px;
+    border: 1px solid #ccc;
+}
+.sidebar{
+  width: 222px;
+  min-width: 222px;
+  height: 100%;
+  border: 1px solid #ccc;
+  background: #fff;
+}
+.Home-sidebar-1 .nav{
+  padding: 8px;
+  margin: 0;
+}
+.Home-sidebar-1 .nav .nav-item{
+  height: 40px;
+  line-height: 40px;
+}
+.Home-sidebar-1 .nav-link{
+    text-decoration: none;
+    display: block;
+}
+.Home-sidebar-1 .nav .nav-item:hover{
+  background-color: #0a9be11a ;
+  color: #4a4a4a;
+  cursor: pointer;
+}
+.sidebar .list-sub-menu{
+  list-style-type: none;
+}
+.active {
+  color: #4a4a4a;
+  font-weight: 600;
+}
+.main{
+  width: calc(100% - 222px);
+    padding: 8px;
+}
+
+.main .container-fluid{
+  width: 100%;
+    height: 100%;
+    border: 1px solid #ccc;
+}
