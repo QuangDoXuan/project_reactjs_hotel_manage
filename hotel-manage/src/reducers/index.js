@@ -16,8 +16,8 @@ const reducer = (state = defaultState, action) => {
         case constants.action.action_user_login:
             newState.userApp.currentUser = action.value;
             newState.userApp.isLogin = newState.userApp.currentUser && newState.userApp.currentUser.id;
-            newState.userApp.loginToken = newState.userApp.currentUser ? newState.userApp.currentUser.loginToken : "";
-            clientUtils.auth = newState.userApp.loginToken;
+            newState.userApp.access_token = newState.userApp.currentUser ? newState.userApp.currentUser.access_token : "";
+            clientUtils.auth = newState.userApp.access_token;
             newState.userApp.unReadNotificationCount = 0;
             return newState;
         case constants.action.action_user_logout:

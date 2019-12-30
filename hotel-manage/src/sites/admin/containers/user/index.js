@@ -1,5 +1,4 @@
 import React from 'react'
-import userProvider from '../../../../data-access/user-provider'
 import './style.css'
 import TableToolbar from '../../components/common/toolbar-top'
 import { DatePicker, KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
@@ -23,6 +22,11 @@ import TextField from '@material-ui/core/TextField';
 import ModalAddUpdate from './create-update-user'
 import ConfirmDialog from '../../components/confirm';
 import ColumnResizer from "react-column-resizer";
+import userProvider from "../../../../data-access/user-provider"
+import { toast } from 'react-toastify';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+
 
 class User extends React.Component {
     constructor(props) {
@@ -39,20 +43,55 @@ class User extends React.Component {
             size: 10,
             total: 0,
             progress: false,
+            activeIndex:0
         }
     }
 
     componentDidMount() {
-
+        this.loadPage()
     }
 
     loadPage() {
-
+        this.getAllUser()
     }
 
     closeModal() {
         this.loadPage();
         this.setState({ openCreateModal: false });
+    }
+
+    getAllUser(){
+        this.setState({
+            progress:true
+        })
+        userProvider.getAll().then(res=>{
+            console.log(res)
+            switch(res.code){
+                case 0: 
+                    this.setState({
+                        data:res.data
+                    })
+                    this.setState({
+                        progress:false
+                    })
+                    break;
+                default:
+
+            }
+            if(res.status==401){
+                toast.error("Bạn không có quyền, vui lòng liên hệ admin!",{
+                    position:toast.POSITION.TOP_RIGHT
+                })
+                this.setState({
+                    progress:false
+                })
+            }
+        }).catch(e=>{
+            console.log(e)
+            this.setState({
+                progress:false
+            })
+        })
     }
 
     modalCreateUpdate(item) {
@@ -207,7 +246,7 @@ class User extends React.Component {
                             <span className="toolbar-icon icon-edit" />
                             <span>Sửa</span>
                         </div>
-                        <div className="toolbar-item delete black-tooltip-main" data-toggle="tooltip" data-placement="bottom" title="Ctrl + D">
+                        <div className="toolbar-item delete black-tooltip-main disable-toolbar" data-toggle="tooltip" data-placement="bottom" title="Ctrl + D">
                             <span className="toolbar-icon icon-delete" />
                             <span>Xóa</span>
                         </div>
@@ -223,44 +262,48 @@ class User extends React.Component {
                     {/* Lọc */}
                 </div>
 
-                <div className="resize vertical">
+                <div style={{position:'relative'}} className="content-table resize vertical ">
+                   
                     <table>
                         <tbody>
                         <tr className="header-table">
-                            <th>Company</th>
+                            <th>STT</th>
                             <ColumnResizer className="columnResizer" minWidth={0} />
-                            <th>Contact</th>
+                            <th>UserName</th>
                             <ColumnResizer className="columnResizer" minWidth={0} />
-                            <th>Country</th>
+                            <th>Email</th>
                             <ColumnResizer className="columnResizer" minWidth={0} />
-                            <th>Company</th>
+                            <th>Xác nhận Email</th>
                             <ColumnResizer className="columnResizer" minWidth={0} />
-                            <th>Contact</th>
+                            <th>Ngày tạo</th>
                               <ColumnResizer className="columnResizer" minWidth={0} />
-                            <th>Country</th>
+                            <th>Quyền</th>
                         </tr>
                         </tbody>
                         <tbody className="table-scroll">
-                        {[1,2,3,4,5,6,7,8,9,10].map((item,index)=>{
+                        {this.state.progress?<CircularProgress />:''}
+                        {/* {this.state.progress?<img className="loading-data-component" src="/images/loading.gif"/>:''} */}
+                        {this.state.data&&this.state.data.length&&this.state.data.map((item,index)=>{
                             return(
-                            <tr className={this.state.activeIndex?"active-row":''} key={index}>
-                                <td>Alfreds Futterkiste</td>
+                            <tr onClick={()=>this.setState({activeIndex:index})} className={this.state.activeIndex==index?"active-row":''} key={index}>
+                                <td>{index}</td>
                                 <ColumnResizer className="columnResizer" minWidth={0} />
-                                <td>Maria Anders</td>
+                                <td>{item.UserName}</td>
                                 <ColumnResizer className="columnResizer" minWidth={0} />
-                                <td>Germany</td>
+                                <td>{item.Email}</td>
                                 <ColumnResizer className="columnResizer" minWidth={0} />
-                                <td>Alfreds Futterkiste</td>
+                                <td>{item.EmailConfirmed?"Đã xác nhận":"Chưa xác nhận"}</td>
                                 <ColumnResizer className="columnResizer" minWidth={0} />
-                                <td>Maria Anders</td>
+                                <td className="text-center">27-12-2019</td>
                                   <ColumnResizer className="columnResizer" minWidth={0} />
-                                <td>Germany</td>
+                                <td>Admin</td>
                             </tr>
                             )
                         })}
                       </tbody>
                     
                     </table>
+                      
                 </div>
 
             </div >

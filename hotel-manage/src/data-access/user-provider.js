@@ -29,6 +29,16 @@ export default {
             })
         });
     },
+
+    getAll(){
+        return new Promise((resolve, reject) => {
+            clientUtils.requestApi("get", constants.api.user.getAll, {}).then(x => {
+                resolve(x);
+            }).catch(e => {
+                reject(e);
+            })
+        });
+    },
     // loginx(email,password){
     //     let parameter = {
     //         email,

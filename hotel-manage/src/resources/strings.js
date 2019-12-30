@@ -35,6 +35,7 @@ module.exports = {
     },
     api: {
         user: {
+            getAll:"/api/user/all",
             search: isofhcare_service + "/user/search",
             // login: isofhcare_service + "/user/login",
             login: land_service + "/auth/login",

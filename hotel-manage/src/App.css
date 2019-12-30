@@ -143,3 +143,18 @@ html,body{
   cursor: pointer;
   background: #ccc;
 }
+.content-table{
+  height: 150px;
+
+}
+.MuiCircularProgress-colorSecondary {
+  color: #e91e63;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+.MuiCircularProgress-colorPrimary {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
