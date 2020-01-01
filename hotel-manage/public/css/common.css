@@ -77,7 +77,7 @@
     height: 36px;
     line-height: 37px;
     align-items: center;
-    border-right: 1px solid #0088c2;
+    border-right: 1px solid #2F9599;
     padding: 0 8px;
 }
 .icon-add {
@@ -112,7 +112,7 @@
 }
 .toolbar-item:hover {
     cursor: pointer;
-    background: #0088c2 !important;
+    background: #83AF9B !important;
 }
 .date-picker-content{
     display: flex;

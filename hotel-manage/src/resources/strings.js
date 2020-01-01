@@ -4,6 +4,8 @@ let isofhcare_service = '/isofhcare'; //dev
 // let isofhcare_service = '/isofhcare'; //test
 let land_service = '/api/v1'
 
+let hotel_service = '/api';
+
 module.exports = {
     key: {
         storage: {
@@ -35,22 +37,20 @@ module.exports = {
     },
     api: {
         user: {
-            search: isofhcare_service + "/user/search",
-            // login: isofhcare_service + "/user/login",
-            login: land_service + "/auth/login",
-            block: isofhcare_service + "/user/block",
-            create: isofhcare_service + "/user/create",
-            update: isofhcare_service + "/user/update",
-            active: isofhcare_service + "/user/set-active",
-            detail: isofhcare_service + "/user/get-detail",
-            updatePassword: isofhcare_service + "/user/update-password",
-            getListBySpecialist: isofhcare_service + "/user/getListBySpecialist",
-            register: isofhcare_service + "/user/register",
-            confirm_otp:isofhcare_service + "/verify-sms-code/",
-            remakePass: isofhcare_service + "/user/confirm-code",
-            refreshPass: isofhcare_service + "/user/refresh-password-by-token",
-            updatePass: isofhcare_service + "/user/update-password/"
-        }, image: {
+            // search: isofhcare_service + "/user/search",
+            // login: land_service + "/auth/login",
+            getAll: hotel_service + '/User/get-all',
+            getByPage: hotel_service + '/User/page',
+            create: hotel_service + '/User/create',
+            update: hotel_service + '/User/update',
+        }, room :{
+            getAll: hotel_service + '/Room/all',
+            getByPage: hotel_service + '/Room/page'
+        }, typeRoom :{
+            getAll: hotel_service + '/RoomType/all',
+            getByPage: hotel_service + '/RoomType/page'
+        }
+        , image: {
             upload: isofhcare_service + "/upload/image"
         }, specialist: {
             getAll: isofhcare_service + "/specialist/get-all",

@@ -16,6 +16,28 @@ export default {
     xx() {
         client.serverApi = "";
     },
+    
+    getAll() {
+        return new Promise((resolve, reject) => {
+            clientUtils.requestApi("get", constants.api.user.getAll).then(x => {
+                resolve(x);
+            }).catch(e => {
+                reject(e);
+            })
+        });
+    },
+    getByPage(param) {
+        let parameters =
+            (param.pagenumber ? '?pageNumber=' + param.pagenumber : '?pageNumber=' + -0) +
+            (param.pagesize ? '&pageSize=' + param.pagesize : '&pageSize=' + 10)
+        return new Promise((resolve, reject) => {
+            clientUtils.requestApi("get", constants.api.user.getByPage + parameters, {}).then(x => {
+                resolve(x);
+            }).catch(e => {
+                reject(e);
+            })
+        })
+    },
     login(email, password) {
         let object = {
             email,
@@ -29,19 +51,6 @@ export default {
             })
         });
     },
-    // loginx(email,password){
-    //     let parameter = {
-    //         email,
-    //         password:password
-    //     }
-    //     return new Promise((resolve, reject)=>{
-    //         clientUtils.requestApi("post", constants.api.user.login, parameter).then(x=>{
-    //             resolve(x)
-    //         }).catch(e=>{
-    //             reject(e)
-    //         })
-    //     })
-    // },
     search(param) {
         let parameters =
             (param.page ? '?page=' + param.page : '?page=' + -1) +
@@ -81,7 +90,7 @@ export default {
     },
     update(id, object) {
         return new Promise((resolve, reject) => {
-            clientUtils.requestApi("put", constants.api.user.update + "/" + id, object).then(x => {
+            clientUtils.requestApi("put", constants.api.user.update + "?Id=" + id, object).then(x => {
                 resolve(x);
             }).catch(e => {
                 reject(e);
@@ -159,5 +168,7 @@ export default {
                 reject(e)
             })
         })
-    }
+    },
+
+
 }   
