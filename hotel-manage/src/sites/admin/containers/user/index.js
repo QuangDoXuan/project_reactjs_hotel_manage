@@ -7,6 +7,7 @@ import moment from 'moment';
 // import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 
 import userProvider from '../../../../data-access/user-provider'
+import roleProvider from '../../../../data-access/role-provider'
 import {
     Table,
     Select,
@@ -46,6 +47,8 @@ class User extends React.Component {
             total: 0,
             progress: false,
 
+            dataRole:[],
+
             emailAdd: '',
             userNameAdd: '',
             passwordAdd: '',
@@ -53,18 +56,37 @@ class User extends React.Component {
             roleAdd: '',
 
             emailEdit: '',
-            userNameEdit: ''
+            userNameEdit: '',
+
+            // search
+            roleSearch:''
 
         }
     }
 
     componentDidMount() {
-        this.getUserByPage();
+       this.loadPage()
+
         console.log(this.state.data)
     }
 
     loadPage() {
-        this.getAllUser();
+        // this.getAllUser();
+        this.getUserByPage();
+        this.getAllRole()
+    }
+
+    getAllRole(){
+        roleProvider.getAll().then(res=>{
+            console.log(res)
+            if(res.code==0){
+                this.setState({
+                    dataRole:res.data
+                })
+            }
+        }).catch(e=>{
+            console.log(e)
+        })
     }
 
     getAllUser() {
@@ -198,29 +220,29 @@ class User extends React.Component {
 
         console.log(listId);
 
-        // userProvider.update(payload).then(res => {
-        //     console.log(res)
-        //     if (res.code == 0) {
-        //         switch (res.code) {
-        //             case 0:
-        //                 toast.success("Cập nhật tài khoản thành công !", {
-        //                     position: toast.POSITION.TOP_RIGHT
-        //                 });
-        //                 this.loadPage();
-        //                 this.setState({ showModalDetail: false });
-        //                 break;
-        //             default:
-        //                 toast.error("Cập nhật tài khoản thất bại !", {
-        //                     position: toast.POSITION.TOP_RIGHT
-        //                 });
-        //                 break;
-        //         }
-        //     }
-        // }).catch(e => {
-        //     toast.error("Cập nhật tài khoản thất bại !", {
-        //         position: toast.POSITION.TOP_RIGHT
-        //     });
-        // })
+        userProvider.deleteUsers(listId).then(res => {
+            console.log(res)
+            if (res.code == 0) {
+                switch (res.code) {
+                    case 0:
+                        toast.success("Xóa thành công !", {
+                            position: toast.POSITION.TOP_RIGHT
+                        });
+                        this.loadPage();
+                        this.setState({ showModalDelete: false });
+                        break;
+                    default:
+                        toast.error("Xóa thất bại !", {
+                            position: toast.POSITION.TOP_RIGHT
+                        });
+                        break;
+                }
+            }
+        }).catch(e => {
+            toast.error("Xóa thất bại !", {
+                position: toast.POSITION.TOP_RIGHT
+            });
+        })
 
     }
 
@@ -403,7 +425,8 @@ class User extends React.Component {
             progress,
             page,
             size,
-            total
+            total,
+            dataRole
         } = this.state
         return (
             <div className="content-area">
@@ -429,16 +452,19 @@ class User extends React.Component {
                             <span className="toolbar-icon icon-view" />
                             <span>Xem</span>
                         </div>
-                        <div className="toolbar-item edit black-tooltip-main"
+                        <div className={this.state.listUserSelected.length>0?"toolbar-item edit black-tooltip-main": "toolbar-item edit black-tooltip-main disable-toolbar" }
                             data-toggle="tooltip"
                             data-placement="bottom"
                             title="Ctrl + E"
                             onClick={() => {
-                                this.setState({
-                                    emailEdit: this.state.listUserSelected[0].Email,
-                                    userNameEdit: this.state.listUserSelected[0].UserName,
-                                    showModalDetail: true
-                                })
+                                if(this.state.listUserSelected&&this.state.listUserSelected.length>0){
+                                    this.setState({
+                                        emailEdit: this.state.listUserSelected[0].Email,
+                                        userNameEdit: this.state.listUserSelected[0].UserName,
+                                        showModalDetail: true
+                                    })
+                                }
+                               
                             }}
                         >
                             <span className="toolbar-icon icon-edit" />
@@ -446,7 +472,7 @@ class User extends React.Component {
 
                         </div>
                         <div
-                            className="toolbar-item delete black-tooltip-main"
+                            className={this.state.listUserSelected.length>0?"toolbar-item delete black-tooltip-main": "toolbar-item delete black-tooltip-main disable-toolbar" }
                             data-toggle="tooltip"
                             data-placement="bottom"
                             title="Ctrl + D"
@@ -494,10 +520,17 @@ class User extends React.Component {
                                 <Typography style={{ margin: '8px 0px', width: 130 }}>Quyền</Typography>
                                 <Select
                                     defaultValue=""
+                                    value={this.state.roleSearch}
                                     style={{ width: '70%' }}
-                                    onChange={() => { }}>
-                                    <Option value="jack">Admin</Option>
-                                    <Option value="lucy">Moderator</Option>
+                                    
+                                    onChange={(value) => this.setState({roleSearch:`${value}`}) }>
+                                    {dataRole&&dataRole.length>0&&dataRole.map((item,index)=>{
+                                        return(
+                                            <Option key={index} value={item.Name}>{item.Name}</Option>
+                                            
+                                        )
+                                    })}
+                                   
                                 </Select>
                             </Col>
                             <Col md={12} sm={24} xs={24} style={{ display: 'inline-flex' }}>
@@ -570,7 +603,7 @@ class User extends React.Component {
                                 render={(text, record, index) => text ? 'Đã xác nhận' : 'Chưa xác nhận'}
                             /> */}
                             <Column title="Quyền" dataIndex="Roles" key="Roles" align={'Center'}
-                                render={(text, record, index) => record.Roles[0].Name}
+                                render={(text, record, index) => record.Roles.map(x=>x.Name)}
                             />
 
                         </Table>
@@ -637,8 +670,11 @@ class User extends React.Component {
                                             style={{ width: '70%' }}
                                             onChange={(val) => this.setState({ roleAdd: val })}
                                         >
-                                            <Option value="Admin">Admin</Option>
-                                            <Option value="Moderator">Moderator</Option>
+                                            {dataRole&&dataRole.length>0&&dataRole.map((item,index)=>{
+                                                return(
+                                                    <Option key={index} value={item.Name}>{item.Name}</Option>
+                                                )
+                                            })}
                                         </Select>
                                     </Col>
                                 </Row>

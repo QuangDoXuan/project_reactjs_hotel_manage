@@ -70,15 +70,17 @@ export default {
             })
         })
     },
-    updatePassword(id, object) {
+
+    deleteUsers(object){
         return new Promise((resolve, reject) => {
-            clientUtils.requestApi("put", constants.api.user.updatePassword + "/" + id, object).then(x => {
+            clientUtils.requestApi("delete", constants.api.user.delete, object).then(x => {
                 resolve(x);
             }).catch(e => {
                 reject(e);
             })
         });
-    },
+    }
+    ,
     create(object) {
         return new Promise((resolve, reject) => {
             clientUtils.requestApi("post", constants.api.user.create, object).then(x => {
@@ -97,15 +99,7 @@ export default {
             })
         });
     },
-    block(id, object) {
-        return new Promise((resolve, reject) => {
-            clientUtils.requestApi("put", constants.api.user.block + "/" + id, object).then(x => {
-                resolve(x);
-            }).catch(e => {
-                reject(e);
-            })
-        });
-    },
+
     active(id, object) {
         return new Promise((resolve, reject) => {
             clientUtils.requestApi("put", constants.api.user.active + "/" + id, object).then(x => {
@@ -124,51 +118,7 @@ export default {
             })
         });
     },
-    register(object) {
-        return new Promise((resolve, reject) => {
-            clientUtils.requestApi("post", constants.api.user.register, object).then(x => {
-                resolve(x);
-            }).catch(e => {
-                reject(e);
-            })
-        });
-    },
-    confirmOtpMessage(id, object) {
-        return new Promise((resolve, reject) => {
-            clientUtils.requestApi("post", constants.api.user.confirm_otp + id, object).then(x => {
-                resolve(x);
-            }).catch(e => {
-                reject(e);
-            })
-        })
-    },
-    forgetPassword(object) {
-        return new Promise((resolve, reject) => {
-            clientUtils.requestApi("put", constants.api.user.forgetPassword, object).then(x => {
-                resolve(x);
-            }).catch(e => {
-                reject(e);
-            })
-        })
-    },
-    refreshPassword(object) {
-        return new Promise((resolve, reject) => {
-            clientUtils.requestApi("put", constants.api.user.refreshPass , object).then(x => {
-                resolve(x);
-            }).catch(e => {
-                reject(e);
-            })
-        })
-    },
-    updatePass(id,object){
-        return new Promise((resolve,reject)=>{
-            clientUtils.requestApi("put",constants.api.user.updatePass + id, object).then(x=>{
-                resolve(x);
-            }).catch(e=>{
-                reject(e)
-            })
-        })
-    },
+  
 
 
 }   
