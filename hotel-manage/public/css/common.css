@@ -170,3 +170,16 @@ table.table-data-content thead tr{
     text-align: center;
     font-weight: 600;
 }
+.text-left{
+    text-align: left;
+}
+.text-right{
+    text-align: right;
+}
+.text-center{
+    text-align: center;
+}
+.disable-toolbar{
+    opacity: 0.5;
+    pointer-events: none;
+}

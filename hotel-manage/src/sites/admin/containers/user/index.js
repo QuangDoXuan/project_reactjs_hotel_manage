@@ -1,5 +1,4 @@
 import React from 'react'
-import userProvider from '../../../../data-access/user-provider'
 import './style.css'
 import { withStyles } from '@material-ui/core/styles';
 import TableToolbar from '../../components/common/toolbar-top'
@@ -7,7 +6,7 @@ import { DatePicker, KeyboardDatePicker, MuiPickersUtilsProvider } from "@materi
 import moment from 'moment';
 // import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 
-
+import userProvider from '../../../../data-access/user-provider'
 import {
     Table,
     Select,
@@ -229,6 +228,40 @@ class User extends React.Component {
     closeModal() {
         this.loadPage();
         this.setState({ openCreateModal: false });
+    }
+
+    getAllUser(){
+        this.setState({
+            progress:true
+        })
+        userProvider.getAll().then(res=>{
+            console.log(res)
+            switch(res.code){
+                case 0: 
+                    this.setState({
+                        data:res.data
+                    })
+                    this.setState({
+                        progress:false
+                    })
+                    break;
+                default:
+
+            }
+            if(res.status==401){
+                toast.error("Bạn không có quyền, vui lòng liên hệ admin!",{
+                    position:toast.POSITION.TOP_RIGHT
+                })
+                this.setState({
+                    progress:false
+                })
+            }
+        }).catch(e=>{
+            console.log(e)
+            this.setState({
+                progress:false
+            })
+        })
     }
 
     modalCreateUpdate(item) {
