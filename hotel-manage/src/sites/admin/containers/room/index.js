@@ -47,6 +47,15 @@ class Room extends React.Component {
             total: 0,
             progress: false,
 
+            searchTerm: '',
+            sortColumn: '',
+            sortOrder: '',
+
+            roomNo: '',
+            typeRoomId: '',
+            status: '',
+            statusStay: '',
+            nop: '',
 
         }
     }
@@ -120,6 +129,46 @@ class Room extends React.Component {
             console.log(e)
         })
     }
+
+    handleSearch() {
+        let {
+            searchTerm,
+            sortColumn,
+            sortOrder,
+            page,
+            size,
+            roomNo,
+            typeRoomId,
+            status,
+            statusStay,
+            nop,
+        } = this.state;
+
+        let param = {
+            searchTerm,
+            sortColumn,
+            sortOrder,
+            pageNumber: page + 1,
+            pageSize: 100,
+            roomNo,
+            roomTypeId: typeRoomId ? typeRoomId : '',
+            status,
+            statusStay,
+            nop,
+        };
+        console.log(param);
+        roomProvider.searchAndPage(param).then(res => {
+            console.log(res)
+            this.setState({
+                data: res.data,
+                total: res.data.length,
+                // totalPerPage:res.Data.TotalNumberOfRecords
+            })
+        }).catch(e => {
+            console.log(e)
+        })
+    }
+
 
     closeModal() {
         this.loadPage();
@@ -288,8 +337,8 @@ class Room extends React.Component {
                         </div> */}
                         <div className="toolbar-item view black-tooltip-main" data-toggle="tooltip" data-placement="bottom" title="Ctrl + 3"
                             onClick={() => {
-                                if(this.state.listRoomSelected.length == 1)
-                                this.setState({ showModalDetail: true })
+                                if (this.state.listRoomSelected.length == 1)
+                                    this.setState({ showModalDetail: true })
                             }}
                         >
                             <span className="toolbar-icon icon-view" />
@@ -297,8 +346,8 @@ class Room extends React.Component {
                         </div>
                         <div className="toolbar-item edit black-tooltip-main" data-toggle="tooltip" data-placement="bottom" title="Ctrl + E"
                             onClick={() => {
-                                if(this.state.listRoomSelected.length == 1)
-                                this.setState({ showModalUpdate: true })
+                                if (this.state.listRoomSelected.length == 1)
+                                    this.setState({ showModalUpdate: true })
                             }}
                         >
                             <span className="toolbar-icon icon-edit" />
@@ -306,8 +355,8 @@ class Room extends React.Component {
                         </div>
                         <div className="toolbar-item delete black-tooltip-main" data-toggle="tooltip" data-placement="bottom" title="Ctrl + D"
                             onClick={() => {
-                                if(this.state.listRoomSelected.length != 0)
-                                this.setState({ showModalDelete: true })
+                                if (this.state.listRoomSelected.length != 0)
+                                    this.setState({ showModalDelete: true })
                             }}
                         >
                             <span className="toolbar-icon icon-delete" />
@@ -330,8 +379,12 @@ class Room extends React.Component {
                                 <Typography style={{ margin: '8px 0px', width: 130 }}>Mã phòng</Typography>
                                 <Input
                                     allowClear
+                                    value={this.state.roomNo}
                                     placeholder="Nhập mã phòng"
                                     style={{ width: '70%' }}
+                                    onChange={(val) => {
+                                        this.setState({ roomNo: val.target.value })
+                                    }}
                                 />
                             </Col>
                             <Col md={12} sm={12} xs={24} style={{ display: 'inline-flex' }}>
@@ -339,8 +392,11 @@ class Room extends React.Component {
                                 <Select
                                     allowClear
                                     defaultValue=""
+                                    value={this.state.typeRoomId}
                                     style={{ width: '70%' }}
-                                    onChange={() => { }}>
+                                    onChange={(val) => {
+                                        this.setState({ typeRoomId: val })
+                                    }}>
                                     {this.state.listTypeRoom.map((item, index) =>
 
                                         <Option value={item.TypeRoomID}>{item.TypeRoomName}</Option>
@@ -358,10 +414,14 @@ class Room extends React.Component {
                                 <Select
                                     allowClear
                                     defaultValue=""
+                                    value={this.state.statusStay}
                                     style={{ width: '70%' }}
-                                    onChange={() => { }}>
-                                    <Option value="empty">Trống</Option>
-                                    <Option value="noempty">Đã có người</Option>
+                                    onChange={(val, e) => {
+                                        this.setState({ statusStay: val })
+                                    }}
+                                >
+                                    <Option value="tr">Trống</Option>
+                                    <Option value="c">Đã có người</Option>
                                 </Select>
                             </Col>
                             <Col md={12} sm={24} xs={24} style={{ display: 'inline-flex' }}>
@@ -369,11 +429,15 @@ class Room extends React.Component {
                                 <Select
                                     allowClear
                                     defaultValue=""
+                                    value={this.state.status}
                                     style={{ width: '70%' }}
-                                    onChange={() => { }}>
-                                    <Option value="clear">Sạch</Option>
-                                    <Option value="ban">Bẩn</Option>
-                                    <Option value="clean">Đang dọn</Option>
+                                    onChange={(val, e) => {
+                                        this.setState({ status: val })
+                                    }}
+                                >
+                                    <Option value="s">Sạch</Option>
+                                    <Option value="b">Bẩn</Option>
+                                    <Option value="ang">Đang dọn</Option>
                                 </Select>
                             </Col>
                         </Row>
@@ -385,6 +449,7 @@ class Room extends React.Component {
                             <Col md={12} sm={24} xs={24} >
                                 <Button
                                     style={{ margin: '8px 0px' }}
+                                    onClick={() => this.handleSearch()}
                                 >
                                     Tìm kiếm
                                     </Button>

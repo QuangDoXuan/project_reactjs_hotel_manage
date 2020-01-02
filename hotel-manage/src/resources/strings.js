@@ -49,7 +49,8 @@ module.exports = {
             getAll: hotel_service + '/Room/all',
             getByPage: hotel_service + '/Room/page',
             create: hotel_service + '/Room/create',
-            delete: hotel_service + '/Room/deletes'
+            delete: hotel_service + '/Room/deletes',
+            searchAndPage: hotel_service + '/Room/search'
         }, typeRoom :{
             getAll: hotel_service + '/RoomType/all',
             getByPage: hotel_service + '/RoomType/page',

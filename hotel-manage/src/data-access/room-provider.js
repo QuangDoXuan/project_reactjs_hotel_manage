@@ -48,4 +48,19 @@ export default {
             })
         });
     },
+
+    searchAndPage(param) {
+        let parameters =
+            '?searchTerm=' + param.searchTerm + '&sortColumn=' + param.sortColumn + '&sortOrder=' + param.sortOrder +
+            (param.pageNumber ? '&pageNumber=' + param.pageNumber : '&pageNumber=' + -0) +
+            (param.pageSize ? '&pageSize=' + param.pageSize : '&pageSize=' + 10) +
+            '&roomNo=' + param.roomNo + '&roomTypeId=' + param.roomTypeId + '&status=' + param.status + '&statusStay=' + param.statusStay + '&nop=' + param.nop
+        return new Promise((resolve, reject) => {
+            clientUtils.requestApi("get", constants.api.room.searchAndPage + parameters, {}).then(x => {
+                resolve(x);
+            }).catch(e => {
+                reject(e);
+            })
+        })
+    },
 }   
