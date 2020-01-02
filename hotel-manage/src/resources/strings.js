@@ -43,7 +43,8 @@ module.exports = {
             getByPage: hotel_service + '/User/page',
             create: hotel_service + '/User/create',
             update: hotel_service + '/User/update',
-            delete: hotel_service + '/User/delete-users'
+            delete: hotel_service + '/User/delete-users',
+            search: hotel_service + '/User/search'
         }, room :{
             getAll: hotel_service + '/Room/all',
             getByPage: hotel_service + '/Room/page'

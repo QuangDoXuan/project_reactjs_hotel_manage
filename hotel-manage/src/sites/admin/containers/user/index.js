@@ -59,8 +59,13 @@ class User extends React.Component {
             userNameEdit: '',
 
             // search
-            roleSearch:''
-
+            roleSearch:'',
+            //validate
+            validEmail:true,
+            validPass:true,
+            validName:true,
+            validRePass:true
+            
         }
     }
 
@@ -144,30 +149,37 @@ class User extends React.Component {
             UserName: userNameAdd,
             RoleName: roleAdd
         }
-
-        userProvider.create(payload).then(res => {
-            console.log(res)
-            if (res.code == 0) {
-                switch (res.code) {
-                    case 0:
-                        toast.success("Tạo mới tài khoản thành công !", {
-                            position: toast.POSITION.TOP_RIGHT
-                        });
-                        this.loadPage();
-                        this.setState({ showModalAdd: false });
-                        break;
-                    default:
-                        toast.error("Tạo mới tài khoản thất bại !", {
-                            position: toast.POSITION.TOP_RIGHT
-                        });
-                        break;
+        if(this.state.validName&&this.state.validEmail&&this.state.validPass&&this.state.validRePass){
+            userProvider.create(payload).then(res => {
+                console.log(res)
+                if (res.code == 0) {
+                    switch (res.code) {
+                        case 0:
+                            toast.success("Tạo mới tài khoản thành công !", {
+                                position: toast.POSITION.TOP_RIGHT
+                            });
+                            this.loadPage();
+                            this.setState({ showModalAdd: false });
+                            break;
+                        default:
+                            toast.error("Tạo mới tài khoản thất bại !", {
+                                position: toast.POSITION.TOP_RIGHT
+                            });
+                            break;
+                    }
                 }
-            }
-        }).catch(e => {
-            toast.error("Tạo mới tài khoản thất bại !", {
+            }).catch(e => {
+                toast.error("Tạo mới tài khoản thất bại !", {
+                    position: toast.POSITION.TOP_RIGHT
+                });
+            })
+        }
+        else{
+            toast.error("Vui lòng nhập đúng thông tin !", {
                 position: toast.POSITION.TOP_RIGHT
             });
-        })
+        }
+        
 
     }
 
@@ -249,7 +261,9 @@ class User extends React.Component {
 
     closeModal() {
         this.loadPage();
-        this.setState({ openCreateModal: false });
+        this.setState({ 
+            openCreateModal: false,
+         });
     }
 
     getAllUser(){
@@ -622,7 +636,7 @@ class User extends React.Component {
                                     <Button key="back" onClick={() => this.setState({ showModalAdd: false })}>
                                         Hủy
                                 </Button>,
-                                    <Button key="submit" htmlType="submit" type="danger" onClick={() => this.handleAddUser()}>
+                                    <Button key="submit"  htmlType="submit" type="danger" onClick={() => this.handleAddUser()}>
                                         Thêm mới
                                 </Button>,
                                 ]
@@ -631,35 +645,76 @@ class User extends React.Component {
                             <Card style={{ padding: 4 }} bordered={false}>
                                 <Row gutter={{ md: 12, lg: 12, xl: 12 }}>
                                     <Col md={12} sm={12} xs={24} style={{ display: 'inline-flex' }}>
-                                        <Typography style={{ margin: '8px 0px', width: 130 }}>Email</Typography>
+                                        <Typography style={{ margin: '8px 0px', width: 130 }}>Email(*)</Typography>
                                         <Input
+
                                             value={this.state.emailAdd}
                                             placeholder="Nhập email"
-                                            style={{ width: '70%' }}
+                                            className={this.state.validEmail?"border-none":"border-red"}
+                                            style={{ width: '70%'}}
                                             onChange={(val) => {
                                                 this.setState({ emailAdd: val.target.value })
                                             }}
+                                            onBlur = {(val)=>{
+                                                if(val.target.value.length==0){
+                                                    this.setState({
+                                                        validEmail: false
+                                                    })
+                                                }
+                                                else{
+                                                    this.setState({
+                                                        validEmail:true
+                                                    })
+                                                }
+                                            }}
                                         />
-
+                                        
                                     </Col>
+                             
                                     <Col md={12} sm={12} xs={24} style={{ display: 'inline-flex' }}>
-                                        <Typography style={{ margin: '8px 0px', width: 130 }}>User name</Typography>
+                                        <Typography style={{ margin: '8px 0px', width: 130 }}>User name(*)</Typography>
                                         <Input
                                             value={this.state.userNameAdd}
+                                            className={this.state.validName?"border-none":"border-red"}
                                             placeholder="Nhập username"
                                             style={{ width: '70%' }}
                                             onChange={(val) => this.setState({ userNameAdd: val.target.value })}
+                                            onBlur = {(val)=>{
+                                                if(val.target.value.length==0){
+                                                    this.setState({
+                                                        validName: false
+                                                    })
+                                                }
+                                                else{
+                                                    this.setState({
+                                                        validName:true
+                                                    })
+                                                }
+                                            }}
                                         />
                                     </Col>
                                 </Row>
                                 <Row gutter={{ md: 12, lg: 12, xl: 12 }}>
                                     <Col md={12} sm={12} xs={24} style={{ display: 'inline-flex' }}>
-                                        <Typography style={{ margin: '8px 0px', width: 130 }}>Mật khẩu</Typography>
+                                        <Typography style={{ margin: '8px 0px', width: 130 }}>Mật khẩu(*)</Typography>
                                         <Input
                                             value={this.state.passwordAdd}
+                                            className={this.state.validPass?"border-none":"border-red"}
                                             placeholder="Nhập mật khẩu"
                                             style={{ width: '70%' }}
                                             onChange={(val) => this.setState({ passwordAdd: val.target.value })}
+                                            onBlur = {(val)=>{
+                                                if(val.target.value.length<8){
+                                                    this.setState({
+                                                        validPass: false
+                                                    })
+                                                }
+                                                else{
+                                                    this.setState({
+                                                        validPasss:true
+                                                    })
+                                                }
+                                            }}
                                         />
                                     </Col>
                                     <Col md={12} sm={12} xs={24} style={{ display: 'inline-flex' }}>
@@ -683,9 +738,22 @@ class User extends React.Component {
                                         <Typography style={{ margin: '8px 0px', width: 130 }}>Nhập lại mật khẩu</Typography>
                                         <Input
                                             value={this.state.confirmPasswordAdd}
+                                            className={this.state.validRePass?"border-none":"border-red"}
                                             placeholder="Xác nhận mật khẩu"
                                             style={{ width: '70%' }}
                                             onChange={(val) => this.setState({ confirmPasswordAdd: val.target.value })}
+                                            onBlur = {(val)=>{
+                                                if(val.target.value.length==0||val.target.value!=this.state.passwordAdd){
+                                                    this.setState({
+                                                        validRePass: false
+                                                    })
+                                                }
+                                                else{
+                                                    this.setState({
+                                                        validRePass:true
+                                                    })
+                                                }
+                                            }}
                                         />
                                     </Col>
                                 </Row>
