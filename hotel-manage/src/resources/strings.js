@@ -45,10 +45,13 @@ module.exports = {
             update: hotel_service + '/User/update',
         }, room :{
             getAll: hotel_service + '/Room/all',
-            getByPage: hotel_service + '/Room/page'
+            getByPage: hotel_service + '/Room/page',
+            create: hotel_service + '/Room/create',
+            delete: hotel_service + '/Room/deletes'
         }, typeRoom :{
             getAll: hotel_service + '/RoomType/all',
-            getByPage: hotel_service + '/RoomType/page'
+            getByPage: hotel_service + '/RoomType/page',
+            getDetail: hotel_service + '/RoomType/detail'
         }
         , image: {
             upload: isofhcare_service + "/upload/image"

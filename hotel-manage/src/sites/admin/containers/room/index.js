@@ -5,8 +5,12 @@ import { withStyles } from '@material-ui/core/styles';
 import './style.css'
 import moment from 'moment';
 import ColumnResizer from "react-column-resizer";
+import { toast } from 'react-toastify';
 
-// import {} from '@material-ui/core';
+import ModalAddRoom from './create';
+import ModalDeleteRoom from './delete';
+import ModalDetailRoom from './detail';
+import ModalUpdateRoom from './update';
 
 import {
     Table,
@@ -16,7 +20,9 @@ import {
     Row,
     Col,
     Button,
-    Input
+    Input,
+    Modal,
+    Spin
 } from 'antd';
 
 const { Column } = Table;
@@ -27,19 +33,21 @@ class Room extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            modalAdd: false,
-            modalDetailtServiceType: false,
+            showModalAdd: false,
+            showModalDelete: false,
+            showModalDetail: false,
+            showModalUpdate: false,
             confirmDialog: false,
             dataUser: {},
             data: [],
             listRoomSelected: [],
             listTypeRoom: [],
-            fromDate: new Date(),
-            toDate: new Date(),
             page: 0,
             size: 10,
             total: 0,
             progress: false,
+
+
         }
     }
 
@@ -236,14 +244,11 @@ class Room extends React.Component {
     }
 
 
-
-
-
     render() {
 
         const rowSelection = {
             onChange: (selectedRowKeys, selectedRows) => {
-                this.setState({ listRoomSelected: selectedRows});
+                this.setState({ listRoomSelected: selectedRows });
                 console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
             },
             getCheckboxProps: record => ({
@@ -270,28 +275,47 @@ class Room extends React.Component {
             <div className="content-area">
                 <div className="panel-top">
                     <div className="toolbar">
-                        <div className="toolbar-item add black-tooltip-main " data-toggle="tooltip" data-placement="bottom" title="Ctrl + 1" id="sub-open">
+                        <div className="toolbar-item add black-tooltip-main " data-toggle="tooltip" data-placement="bottom" title="Ctrl + 1" id="sub-open"
+                            onClick={() => this.setState({ showModalAdd: true })}
+                        >
                             <span className="toolbar-icon icon-add" />
                             <span className="toolbar-text">Thêm mới</span>
 
                         </div>
-                        <div className="toolbar-item double black-tooltip-main" data-toggle="tooltip" data-placement="bottom" title="Ctrl + 2">
+                        {/* <div className="toolbar-item double black-tooltip-main" data-toggle="tooltip" data-placement="bottom" title="Ctrl + 2">
                             <span className="toolbar-icon icon-double" />
                             <span>Nhân bản</span>
-                        </div>
-                        <div className="toolbar-item view black-tooltip-main" data-toggle="tooltip" data-placement="bottom" title="Ctrl + 3">
+                        </div> */}
+                        <div className="toolbar-item view black-tooltip-main" data-toggle="tooltip" data-placement="bottom" title="Ctrl + 3"
+                            onClick={() => {
+                                if(this.state.listRoomSelected.length == 1)
+                                this.setState({ showModalDetail: true })
+                            }}
+                        >
                             <span className="toolbar-icon icon-view" />
                             <span>Xem</span>
                         </div>
-                        <div className="toolbar-item edit black-tooltip-main" data-toggle="tooltip" data-placement="bottom" title="Ctrl + E">
+                        <div className="toolbar-item edit black-tooltip-main" data-toggle="tooltip" data-placement="bottom" title="Ctrl + E"
+                            onClick={() => {
+                                if(this.state.listRoomSelected.length == 1)
+                                this.setState({ showModalUpdate: true })
+                            }}
+                        >
                             <span className="toolbar-icon icon-edit" />
                             <span>Sửa</span>
                         </div>
-                        <div className="toolbar-item delete black-tooltip-main" data-toggle="tooltip" data-placement="bottom" title="Ctrl + D">
+                        <div className="toolbar-item delete black-tooltip-main" data-toggle="tooltip" data-placement="bottom" title="Ctrl + D"
+                            onClick={() => {
+                                if(this.state.listRoomSelected.length != 0)
+                                this.setState({ showModalDelete: true })
+                            }}
+                        >
                             <span className="toolbar-icon icon-delete" />
                             <span>Xóa</span>
                         </div>
-                        <div className="toolbar-item f5 black-tooltip-main" data-toggle="tooltip" data-placement="bottom" title="Ctrl + R">
+                        <div className="toolbar-item f5 black-tooltip-main" data-toggle="tooltip" data-placement="bottom" title="Ctrl + R"
+                            onClick={() => this.loadPage()}
+                        >
                             <span className="toolbar-icon icon-refresh" />
                             <span>Nạp</span>
                         </div>
@@ -317,8 +341,8 @@ class Room extends React.Component {
                                     defaultValue=""
                                     style={{ width: '70%' }}
                                     onChange={() => { }}>
-                                        {this.state.listTypeRoom.map((item, index) => 
-                                        
+                                    {this.state.listTypeRoom.map((item, index) =>
+
                                         <Option value={item.TypeRoomID}>{item.TypeRoomName}</Option>
                                     )}
                                 </Select>
@@ -374,60 +398,71 @@ class Room extends React.Component {
                 </div>
 
                 <div className="table-list">
-                    <Table
-                        rowSelection={rowSelection}
-                        dataSource={data}
-                        pagination={
-                            {
-                                showSizeChanger: true,
-                                current: page + 1,
-                                pageSize: size,
-                                total: total,
-                                onShowSizeChange: (current, pageSize) => {
-                                    this.setState({ size: pageSize, page: current - 1 }, () => this.getRoomByPage())
-                                    //   this.setState({ pageSize: pageSize, page: current - 1 }, () => this.getListBrandName())
-                                },
-                                onChange: (value) => {
-                                    console.log(value)
-                                    this.setState({ page: value - 1 }, () => this.getRoomByPage())
+                    <Spin spinning={this.state.progress} size="large">
+                        <Table
+                            rowSelection={rowSelection}
+                            dataSource={data}
+                            pagination={
+                                {
+                                    showSizeChanger: true,
+                                    current: page + 1,
+                                    pageSize: size,
+                                    total: total,
+                                    onShowSizeChange: (current, pageSize) => {
+                                        this.setState({ size: pageSize, page: current - 1 }, () => this.getRoomByPage())
+                                        //   this.setState({ pageSize: pageSize, page: current - 1 }, () => this.getListBrandName())
+                                    },
+                                    onChange: (value) => {
+                                        console.log(value)
+                                        this.setState({ page: value - 1 }, () => this.getRoomByPage())
+                                    }
                                 }
                             }
-                        }
-                        bordered
-                        scroll={{ y: 400 }}
-                    >
-                        <Column title="STT" key="index" width={90} align={'Center'}
-                            render={(text, record, index) => (this.state.page) * this.state.size + index + 1}
-                        />
-                        <Column title="Mã phòng" dataIndex="RoomNo" key="RoomNo" align={'Left'}
-                            render={(text, record, index) => text}
-                        />
-                        <Column title="Tên phòng" dataIndex="RoomName" key="RoomName" align={'Left'}
-                            render={(text, record, index) => text}
-                        />
-                        {/* <Column title="Số người" dataIndex="NoP" key="NoP" align={'Center'}
-                            render={(text, record, index) => text}
-                        /> */}
-                        <Column title="Tầng" dataIndex="Floor" key="Floor" align={'Center'}
-                            render={(text, record, index) => text}
-                        />
-                        {/* <Column title="Giá" dataIndex="Price" key="Price" align={'Center'}
+                            bordered
+                            scroll={{ y: 400 }}
+                        >
+                            <Column title="STT" key="index" width={90} align={'Center'}
+                                render={(text, record, index) => (this.state.page) * this.state.size + index + 1}
+                            />
+                            <Column title="Mã phòng" dataIndex="RoomNo" key="RoomNo" align={'Left'}
+                                render={(text, record, index) => text}
+                            />
+                            <Column title="Tên phòng" dataIndex="RoomName" key="RoomName" align={'Left'}
+                                render={(text, record, index) => text}
+                            />
+                            {/* <Column title="Số người" dataIndex="NoP" key="NoP" align={'Center'}
                             render={(text, record, index) => text}
                         /> */}
-                        <Column title="Loại phòng" dataIndex="typeRoomName" key="typeRoomName" align={'Center'}
+                            <Column title="Tầng" dataIndex="Floor" key="Floor" align={'Center'}
+                                render={(text, record, index) => text}
+                            />
+                            {/* <Column title="Giá" dataIndex="Price" key="Price" align={'Center'}
                             render={(text, record, index) => text}
-                        />
-                        <Column title="Trạng thái ở" dataIndex="Status" key="Status" align={'Center'}
-                            render={(text, record, index) => text
+                        /> */}
+                            <Column title="Loại phòng" dataIndex="TypeRoomID" key="TypeRoomID" align={'Left'}
+                                render={(text, record, index) =>
+                                    this.state.listTypeRoom.filter(v => v.TypeRoomID == text)[0].TypeRoomName
+                                }
+                            />
+                            <Column title="Trạng thái ở" dataIndex="Status" key="Status" align={'Left'}
+                                render={(text, record, index) => text
 
-                            }
-                        />
-                        <Column title="Tình trạng phòng" dataIndex="StatusStay" key="StatusStay" align={'Center'}
-                            render={(text, record, index) => text
+                                }
+                            />
+                            <Column title="Tình trạng phòng" dataIndex="StatusStay" key="StatusStay" align={'Left'}
+                                render={(text, record, index) => text
 
-                            }
-                        />
-                    </Table>
+                                }
+                            />
+                        </Table>
+                    </Spin>
+
+                    {this.state.showModalAdd && <ModalAddRoom loadPage={() => this.loadPage()} closeModal={() => this.setState({ showModalAdd: false })} />}
+                    {this.state.showModalDelete && <ModalDeleteRoom listRoom={this.state.listRoomSelected} loadPage={() => this.loadPage()} closeModal={() => this.setState({ showModalDelete: false })} />}
+                    {this.state.showModalDetail && <ModalDetailRoom listRoom={this.state.listRoomSelected} closeModal={() => this.setState({ showModalDetail: false })} />}
+                    {this.state.showModalUpdate && <ModalUpdateRoom listRoom={this.state.listRoomSelected} loadPage={() => this.loadPage()} closeModal={() => this.setState({ showModalUpdate: false })} />}
+
+
                 </div>
 
             </div >
