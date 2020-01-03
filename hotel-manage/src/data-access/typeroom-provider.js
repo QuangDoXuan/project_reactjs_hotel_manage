@@ -28,4 +28,14 @@ export default {
             })
         })
     },
+
+    getDetail(id) {
+        return new Promise((resolve, reject) => {
+            clientUtils.requestApi("get", constants.api.typeRoom.getDetail + '?id=' + id, {}).then(x => {
+                resolve(x);
+            }).catch(e => {
+                reject(e);
+            })
+        })
+    },
 }   

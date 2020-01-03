@@ -47,10 +47,14 @@ module.exports = {
             search: hotel_service + '/User/search'
         }, room :{
             getAll: hotel_service + '/Room/all',
-            getByPage: hotel_service + '/Room/page'
+            getByPage: hotel_service + '/Room/page',
+            create: hotel_service + '/Room/create',
+            delete: hotel_service + '/Room/deletes',
+            searchAndPage: hotel_service + '/Room/search'
         }, typeRoom :{
             getAll: hotel_service + '/RoomType/all',
-            getByPage: hotel_service + '/RoomType/page'
+            getByPage: hotel_service + '/RoomType/page',
+            getDetail: hotel_service + '/RoomType/detail'
         }, role:{
             getAll: hotel_service +'/Role/all'
         }, customer:{
