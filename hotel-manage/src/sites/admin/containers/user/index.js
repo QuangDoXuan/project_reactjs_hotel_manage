@@ -82,6 +82,7 @@ class User extends React.Component {
     }
 
     getAllRole(){
+        
         roleProvider.getAll().then(res=>{
             console.log(res)
             if(res.code==0){
@@ -117,19 +118,25 @@ class User extends React.Component {
     }
 
     getUserByPage() {
+        this.setState({ progress: true })
         let param = {
             pagesize: this.state.size,
             pagenumber: this.state.page
         }
         userProvider.getByPage(param).then(res => {
             console.log(res)
-            this.setState({
-                data: res.data.Results,
-                total: res.data.TotalNumberOfRecords,
-                // totalPerPage:res.Data.TotalNumberOfRecords
-            })
+            if(res.code==0){
+                this.setState({
+                    data: res.data.Results,
+                    total: res.data.TotalNumberOfRecords,
+                    // totalPerPage:res.Data.TotalNumberOfRecords
+                })
+                this.setState({ progress: false })
+            }
+           
         }).catch(e => {
             console.log(e)
+            this.setState({ progress: false })
         })
     }
 

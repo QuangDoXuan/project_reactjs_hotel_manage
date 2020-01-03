@@ -60,8 +60,8 @@ class Home extends Component {
                 classActiveStyle: 'calendar-working',
             },
             {
-                name: "Quản lý nhân viên",
-                url: '/admin/employee',
+                name: "Quản lý khách hàng",
+                url: '/admin/customer',
                 iconClassName: 'icon-employ',
                 classActiveStyle: 'calendar-working',
             },

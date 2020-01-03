@@ -51,6 +51,11 @@ export default {
             })
         });
     },
+
+    searchByName(){
+
+    },
+
     search(param) {
         let parameters =
             (param.page ? '?page=' + param.page : '?page=' + -1) +

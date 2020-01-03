@@ -53,6 +53,13 @@ module.exports = {
             getByPage: hotel_service + '/RoomType/page'
         }, role:{
             getAll: hotel_service +'/Role/all'
+        }, customer:{
+            getByPage: hotel_service + '/Customer/page',
+            getAll: hotel_service + '/Customer/all',
+            create: hotel_service + '/Customer/create',
+            update:hotel_service + '/Customer/update',
+            search: hotel_service +'/Customer/search',
+            delete: hotel_service + '/Customer/deletes'
         }
         
     }

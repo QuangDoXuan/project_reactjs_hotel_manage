@@ -21,11 +21,16 @@ const Room = Loadable({
   loading: Loading,
 })
 
+const Customer = Loadable({
+  loader: () => import('../containers/customer/index.js'),
+  loading: Loading,
+})
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
    { path: '/admin/dashboard', name: "Dashboard", component: Dashboard },
     { path: '/admin/user', name: "", component: User },
     { path: '/admin/room', name: "", component: Room },
+    { path: '/admin/customer', name: "", component: Customer },
 ]
 
 export default routes;
