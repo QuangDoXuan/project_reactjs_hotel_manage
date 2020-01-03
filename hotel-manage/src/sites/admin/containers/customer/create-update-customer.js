@@ -45,7 +45,6 @@ class ModalAddUpdate extends React.Component {
     }
 
     createUpdateCustomer(){
-        debugger
         let param = {
             CustomerNo : this.state.customerCode,
             Name : this.state.customerName,
