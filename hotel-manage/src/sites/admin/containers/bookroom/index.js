@@ -402,7 +402,7 @@ class BookRoom extends React.Component {
 
                                 }
                             />
-                            <Column title="Đã hanh toán" dataIndex="Status" key="Status" align={'Left'}
+                            <Column title="Đã thanh toán" dataIndex="Status" key="Status" align={'Left'}
                                 render={(text, record, index) => text == true ? 'Rồi' : 'Chưa'}
                             />
                         </Table>
