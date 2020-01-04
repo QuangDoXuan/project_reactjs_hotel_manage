@@ -255,17 +255,27 @@ class Add extends Component {
                             <Col md={12} sm={12} xs={24} style={{ display: 'inline-flex' }}>
                                 <Text strong style={{ margin: '8px 0px', width: 130 }}>Tên khách hàng</Text>
                                 <Select
+                                    placeholder="Chọn khách hàng"
+                                    style={{
+                                        width: '70%'
+                                    }}
+                                    optionFilterProp="children"
+                                    filterOption={(input, option) =>
+                                        option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                    }
+                                    showSearch
                                     allowClear
-                                    value={this.state.CustomerID}
-                                    style={{ width: '70%' }}
+                                    showArrow={false}
+                                    notFoundContent={null}
+                                    defaultActiveFirstOption={false}
                                     onChange={(val) => {
-                                        this.setState({ CustomerID: val })
+                                        this.setState({ customerId: val });
                                     }}
                                 >
-                                    {this.state.listCustomer.map((item, index) =>
+                                    {this.state.listCustomer.map(v =>
+                                        <Option value={v.CustomerID} key={v.CustomerID}>{v.Name}</Option>)
 
-                                        <Option value={item.CustomerID}>{item.Name}</Option>
-                                    )}
+                                    }
                                 </Select>
                             </Col>
                             <Col md={12} sm={12} xs={24} style={{ display: 'inline-flex' }}>
