@@ -96,7 +96,7 @@ class Add extends Component {
             console.log(res)
             if (res.code == 0) {
                 this.setState({
-                    listRoom: res.data,
+                    listRoom: res.data.filter(x=>x.Status=="Trống"),
                 })
             }
             else {
@@ -263,13 +263,14 @@ class Add extends Component {
                                     filterOption={(input, option) =>
                                         option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                     }
+
                                     showSearch
                                     allowClear
                                     showArrow={false}
                                     notFoundContent={null}
                                     defaultActiveFirstOption={false}
                                     onChange={(val) => {
-                                        this.setState({ customerId: val });
+                                        this.setState({ CustomerID: val });
                                     }}
                                 >
                                     {this.state.listCustomer.map(v =>

@@ -17,7 +17,7 @@ class Header extends React.Component{
         return(
             <header className="header-admin">
                 <div className="left-side-header">
-                    <p>Hotel Mange</p>
+                    <p style={{marginTop:18}}>Hotel Mange</p>
                 </div>
                 {this.props.userApp.currentUser?
                     <div onClick={()=>this.setState({activeSub:!this.state.activeSub})} className="user-setting">
