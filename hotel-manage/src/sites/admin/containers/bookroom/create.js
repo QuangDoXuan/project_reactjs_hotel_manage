@@ -144,7 +144,7 @@ class Add extends Component {
                             toast.success("Tạo mới Đặt phòng thành công !", {
                                 position: toast.POSITION.TOP_RIGHT
                             });
-                            this.props.loadpage();
+                            this.props.loadPage();
                             this.handleClose();
 
                         } else {
@@ -155,7 +155,7 @@ class Add extends Component {
                     }).catch(e => {
 
                     });
-                    
+
                 });
 
             }
@@ -298,7 +298,9 @@ class Add extends Component {
                 <Modal
                     visible={this.state.showModalSelectRoom}
                     title="Chọn phòng"
-                    onCancel={this.handleCancel}
+                    onCancel={() => this.setState({
+                        showModalSelectRoom: false
+                    })}
                     footer={[
                         <Button key="back" type="default" onClick={() => {
                             this.setState({
@@ -342,9 +344,9 @@ class Add extends Component {
                                     this.setState({ roomId: val });
                                 }}
                             >
-                                {this.state.listRoom.map(v =>
-                                    <Option value={v.RoomID} key={v.RoomID}>{v.RoomName}</Option>)
-
+                                {this.state.listRoom.filter(v => v.StatusStay == 'Trống').map(v =>
+                                    <Option value={v.RoomID} key={v.RoomID}>{v.RoomName}</Option>
+                                )
                                 }
                             </Select>
 
