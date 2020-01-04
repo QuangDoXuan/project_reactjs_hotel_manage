@@ -17,15 +17,15 @@ export default {
     },
 
 
-    // create(object) {
-    //     return new Promise((resolve, reject) => {
-    //         clientUtils.requestApi("post", constants.api.room.create, object).then(x => {
-    //             resolve(x);
-    //         }).catch(e => {
-    //             reject(e);
-    //         })
-    //     });
-    // },
+    create(object) {
+        return new Promise((resolve, reject) => {
+            clientUtils.requestApi("post", constants.api.payment.create, object).then(x => {
+                resolve(x);
+            }).catch(e => {
+                reject(e);
+            })
+        });
+    },
 
     // delete(listId) {
     //     return new Promise((resolve, reject) => {
