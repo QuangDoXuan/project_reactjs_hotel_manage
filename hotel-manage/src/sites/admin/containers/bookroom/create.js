@@ -144,7 +144,8 @@ class Add extends Component {
                             toast.success("Tạo mới Đặt phòng thành công !", {
                                 position: toast.POSITION.TOP_RIGHT
                             });
-
+                            this.props.loadPage();
+                            this.handleClose();
 
                         } else {
                             toast.error("Tạo mới Đặt phòng thất bại !", {
@@ -154,8 +155,7 @@ class Add extends Component {
                     }).catch(e => {
 
                     });
-                    this.props.loadpage();
-                    this.handleClose();
+                   
                 });
 
             }
