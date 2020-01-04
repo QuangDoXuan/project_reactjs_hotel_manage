@@ -64,6 +64,21 @@ module.exports = {
             update:hotel_service + '/Customer/update',
             search: hotel_service +'/Customer/search',
             delete: hotel_service + '/Customer/deletes'
+        }, bookroom: {
+            getAll: hotel_service + '/BookRoom/all',
+            getByPage: hotel_service + '/BookRoom/get-all',
+            create: hotel_service + '/BookRoom/create',
+            createDetail: hotel_service + '/BookRoom/create-detail',
+            delete: hotel_service + '/BookRoom/deletes',
+            searchAndPage: hotel_service + '/BookRoom/search'
+        }, equipment :{
+            getAll: hotel_service + '/equip/all',
+        }, device :{
+            getAll: hotel_service + '/Device/all',
+            getByPage: hotel_service + '/Device/page',
+            getDetail: hotel_service + '/Device/detail'
+        }, payment :{
+            getAll: hotel_service + '/Payment/all',
         }
         
     }

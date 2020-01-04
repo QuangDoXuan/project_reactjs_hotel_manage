@@ -25,12 +25,32 @@ const Customer = Loadable({
   loader: () => import('../containers/customer/index.js'),
   loading: Loading,
 })
+
+const BookRoom = Loadable({
+  loader: () => import('../containers/bookroom/index.js'),
+  loading: Loading,
+})
+
+const Device = Loadable({
+  loader: () => import('../containers/equipment/index.js'),
+  loading: Loading,
+})
+
+const Payment = Loadable({
+  loader: () => import('../containers/payment/index.js'),
+  loading: Loading,
+})
+
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
    { path: '/admin/dashboard', name: "Dashboard", component: Dashboard },
     { path: '/admin/user', name: "", component: User },
     { path: '/admin/room', name: "", component: Room },
+    { path: '/admin/book-room', name: "", component: BookRoom },
     { path: '/admin/customer', name: "", component: Customer },
+    { path: '/admin/device', name: "", component: Device },
+    { path: '/admin/payment', name: "", component: Payment },
+
 ]
 
 export default routes;

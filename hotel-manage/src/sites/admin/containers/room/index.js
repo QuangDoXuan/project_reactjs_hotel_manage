@@ -93,7 +93,7 @@ class Room extends React.Component {
     }
 
     getAllTypeRoom() {
-        this.setState({ progress: true })
+        
         typeRoomProvider.getAll().then(res => {
             console.log(res)
             if (res.code == 0) {
@@ -106,14 +106,15 @@ class Room extends React.Component {
                     listTypeRoom: []
                 })
             }
-            this.setState({ progress: false })
+            
         }).catch(e => {
             console.log(e)
-            this.setState({ progress: false })
+            
         })
     }
 
     getRoomByPage() {
+        this.setState({ progress: true })
         let param = {
             pagesize: this.state.size,
             pagenumber: this.state.page
@@ -123,10 +124,11 @@ class Room extends React.Component {
             this.setState({
                 data: res.data.Results,
                 total: res.data.TotalNumberOfRecords,
-                // totalPerPage:res.Data.TotalNumberOfRecords
             })
+            this.setState({ progress: false })
         }).catch(e => {
             console.log(e)
+            this.setState({ progress: false })
         })
     }
 
@@ -162,7 +164,6 @@ class Room extends React.Component {
             this.setState({
                 data: res.data,
                 total: res.data.length,
-                // totalPerPage:res.Data.TotalNumberOfRecords
             })
         }).catch(e => {
             console.log(e)
@@ -335,7 +336,11 @@ class Room extends React.Component {
                             <span className="toolbar-icon icon-double" />
                             <span>Nhân bản</span>
                         </div> */}
-                        <div className="toolbar-item view black-tooltip-main" data-toggle="tooltip" data-placement="bottom" title="Ctrl + 3"
+                        <div
+                            className={this.state.listRoomSelected.length == 1 ? "toolbar-item edit black-tooltip-main" : "toolbar-item edit black-tooltip-main disable-toolbar"}
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            title="Ctrl + 3"
                             onClick={() => {
                                 if (this.state.listRoomSelected.length == 1)
                                     this.setState({ showModalDetail: true })
@@ -344,7 +349,11 @@ class Room extends React.Component {
                             <span className="toolbar-icon icon-view" />
                             <span>Xem</span>
                         </div>
-                        <div className="toolbar-item edit black-tooltip-main" data-toggle="tooltip" data-placement="bottom" title="Ctrl + E"
+                        <div
+                            className={this.state.listRoomSelected.length == 1 ? "toolbar-item edit black-tooltip-main" : "toolbar-item edit black-tooltip-main disable-toolbar"}
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            title="Ctrl + 3"
                             onClick={() => {
                                 if (this.state.listRoomSelected.length == 1)
                                     this.setState({ showModalUpdate: true })
@@ -353,7 +362,11 @@ class Room extends React.Component {
                             <span className="toolbar-icon icon-edit" />
                             <span>Sửa</span>
                         </div>
-                        <div className="toolbar-item delete black-tooltip-main" data-toggle="tooltip" data-placement="bottom" title="Ctrl + D"
+                        <div
+                            className={this.state.listRoomSelected.length > 0 ? "toolbar-item edit black-tooltip-main" : "toolbar-item edit black-tooltip-main disable-toolbar"}
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            title="Ctrl + 3"
                             onClick={() => {
                                 if (this.state.listRoomSelected.length != 0)
                                     this.setState({ showModalDelete: true })
@@ -475,7 +488,6 @@ class Room extends React.Component {
                                     total: total,
                                     onShowSizeChange: (current, pageSize) => {
                                         this.setState({ size: pageSize, page: current - 1 }, () => this.getRoomByPage())
-                                        //   this.setState({ pageSize: pageSize, page: current - 1 }, () => this.getListBrandName())
                                     },
                                     onChange: (value) => {
                                         console.log(value)

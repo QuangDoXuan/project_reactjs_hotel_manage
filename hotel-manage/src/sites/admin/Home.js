@@ -72,15 +72,15 @@ class Home extends Component {
                 classActiveStyle: 'calendar-working',
             },
             {
-                name: "Quỹ tiền",
-                url: '/admin/fund',
-                iconClassName: 'icon-fund',
+                name: "Quản lý thanh toán",
+                url: '/admin/payment',
+                iconClassName: 'icon-payment',
                 classActiveStyle: 'calendar-working',
             },
             {
-                name: "Chi phí",
-                url: '/admin/payment',
-                iconClassName: 'icon-payment',
+                name: "Quỹ tiền",
+                url: '/admin/fund',
+                iconClassName: 'icon-fund',
                 classActiveStyle: 'calendar-working',
             },
             {
