@@ -60,6 +60,8 @@ class BookRoom extends React.Component {
             customerId: '',
             statusStay: '',
             nop: '',
+            customerCode:'',
+            identity:''
 
         }
     }
@@ -119,7 +121,9 @@ class BookRoom extends React.Component {
             pageSize: this.state.size,
             pageNumber: this.state.page,
             customerId: this.state.customerId,
-            bookroomNo: this.state.bookroomNo
+            bookroomNo: this.state.bookroomNo,
+            customerCode : this.state.customerCode,
+            identity: this.state.identity
         }
         bookRoomProvider.searchAndPage(param).then(res => {
             console.log(res)
@@ -276,30 +280,26 @@ class BookRoom extends React.Component {
                                     }}
                                 />
                             </Col>
-                            {/* <Col md={12} sm={12} xs={24} style={{ display: 'inline-flex' }}>
-                                <Typography style={{ margin: '8px 0px', width: 130 }}>Mã phòng</Typography>
-                                <Select
-                                    placeholder="Chọn mã phòng"
-                                    style={{
-                                        width: '70%'
-                                    }}
-                                    optionFilterProp="children"
-                                    filterOption={(input, option) =>
-                                        option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                    }
-                                    showSearch
-                                    allowClear
-                                    onChange={(val, e) => {
-                                        console.log(val)
-                                        this.setState({ roomId: val });
-                                    }}
-                                >
-                                    {this.state.listRoom.map(v =>
-                                        <Option value={v.RoomID} key={v.RoomID}>{v.RoomName}</Option>)
+                            <Col md={12} sm={12} xs={24} style={{ display: 'inline-flex' }}>
+                                <Typography style={{ margin: '8px 0px', width: 130 }}>Mã khách hàng</Typography>
+                                <Input
+                                    value={this.state.customerCode}
+                                    onChange = {(val)=> this.setState({customerCode: val.target.value})}
+                                    placeholder="Nhập mã KH"
+                                    style={{ width: '70%' }}
+                                />
+                            </Col>
 
-                                    }
-                                </Select>
-                            </Col> */}
+                            <Col md={12} sm={12} xs={24} style={{ display: 'inline-flex' }}>
+                                <Typography style={{ margin: '8px 0px', width: 130 }}>CMND/CCCD</Typography>
+                                <Input
+                                    value={this.state.identity}
+                                    onChange = {(val)=> this.setState({identity: val.target.value})}
+                                    placeholder="Nhập số CMND/CCCD"
+                                    style={{marginTop:4, width: '70%' }}
+                                />
+                            </Col>
+
                             <Col md={12} sm={12} xs={24} style={{ display: 'inline-flex' }}>
                                 <Typography style={{ margin: '8px 0px', width: 130 }}>Tên khách hàng</Typography>
                                 <Select
