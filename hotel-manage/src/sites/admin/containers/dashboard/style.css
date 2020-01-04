@@ -1,7 +1,11 @@
 .content-area{
     overflow: auto;
+    overflow-x: hidden;
 }
-
+.title-thongke{
+  font-weight:bold;
+  font-size: 15px;
+}
 .react-resizable {
     position: relative;
   }
@@ -66,4 +70,7 @@
   .react-resizable-handle-s {
     bottom: 0;
     transform: rotate(45deg);
+  }
+  .ant-card-body{
+    cursor: pointer;
   }

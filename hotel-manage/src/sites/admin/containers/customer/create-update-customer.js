@@ -81,19 +81,33 @@ class ModalAddUpdate extends React.Component {
         }
         else{
             customerProvider.create(param).then(res=>{
-                if(res.code==0){
-                    toast.success("Tạo mới khách hàng thành công",{
-                        position: toast.POSITION.TOP_RIGHT
-                    })
-                    this.props.callBackOff()
-                    this.props.refresh()
-                }
-                else{
-                    toast.error("Tạo mới khách hàng không thành công",{
-                        position: toast.POSITION.TOP_RIGHT
-                    })
-                    this.props.callBackOff()
-                    this.props.refresh()
+
+                switch(res.code){
+                    case 0 :
+                        toast.success("Tạo mới khách hàng thành công",{
+                            position: toast.POSITION.TOP_RIGHT
+                        })
+                        this.props.callBackOff()
+                        this.props.refresh()
+                        break;
+                    case 1 : 
+                        toast.error("Tạo mới khách hàng không thành công",{
+                            position: toast.POSITION.TOP_RIGHT
+                        })
+                        this.props.callBackOff()
+                        this.props.refresh()
+                        break;
+                    case 2 : 
+                        toast.error("CMND/CCCD đã tồn tại",{
+                            position: toast.POSITION.TOP_RIGHT
+                        })
+                        break;
+                    case 3: 
+                        toast.error("Mã KH đã tồn tại",{
+                            position: toast.POSITION.TOP_RIGHT
+                        })
+                        break;
+
                 }
             }).catch(e=>{
                 toast.error("Đã xảy ra lỗi, vui lòng thử lại",{

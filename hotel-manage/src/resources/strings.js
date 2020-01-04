@@ -70,7 +70,8 @@ module.exports = {
             create: hotel_service + '/BookRoom/create',
             createDetail: hotel_service + '/BookRoom/create-detail',
             delete: hotel_service + '/BookRoom/deletes',
-            searchAndPage: hotel_service + '/BookRoom/search'
+            searchAndPage: hotel_service + '/BookRoom/search',
+            getPerMonth: hotel_service + '/getpermonth'
         }, equipment :{
             getAll: hotel_service + '/equip/all',
         }, device :{
@@ -79,6 +80,9 @@ module.exports = {
             getDetail: hotel_service + '/Device/detail'
         }, payment :{
             getAll: hotel_service + '/Payment/all',
+        },
+        employee:{
+            getAll: hotel_service + '/employee/all'
         }
         
     }

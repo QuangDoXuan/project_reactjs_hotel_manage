@@ -226,6 +226,7 @@ class Customer extends React.Component {
                             data-toggle="tooltip"
                             data-placement="bottom"
                             title="Ctrl + R"
+                            onClick = {()=>this.loadPage()}
                         >
                             <span className="toolbar-icon icon-refresh" />
                             <span>Nạp</span>
