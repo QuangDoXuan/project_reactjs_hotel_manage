@@ -144,7 +144,8 @@ class Add extends Component {
                             toast.success("Tạo mới Đặt phòng thành công !", {
                                 position: toast.POSITION.TOP_RIGHT
                             });
-
+                            this.props.loadpage();
+                            this.handleClose();
 
                         } else {
                             toast.error("Tạo mới Đặt phòng thất bại !", {
@@ -154,8 +155,7 @@ class Add extends Component {
                     }).catch(e => {
 
                     });
-                    this.props.loadpage();
-                    this.handleClose();
+                    
                 });
 
             }
@@ -263,13 +263,14 @@ class Add extends Component {
                                     filterOption={(input, option) =>
                                         option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                     }
+
                                     showSearch
                                     allowClear
                                     showArrow={false}
                                     notFoundContent={null}
                                     defaultActiveFirstOption={false}
                                     onChange={(val) => {
-                                        this.setState({ customerId: val });
+                                        this.setState({ CustomerID: val });
                                     }}
                                 >
                                     {this.state.listCustomer.map(v =>
