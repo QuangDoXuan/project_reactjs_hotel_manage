@@ -13,6 +13,7 @@ import ModalAddBookRoom from './create';
 import ModalDeleteBookRoom from './delete';
 import ModalDetailBookRoom from './detail';
 // import ModalUpdateBookRoom from './update';
+import ModalAddPayment from './add-payment';
 
 import {
     Table,
@@ -209,8 +210,9 @@ class BookRoom extends React.Component {
                             data-placement="bottom"
                             title="Ctrl + 3"
                             onClick={() => {
-                                if (this.state.listBookRoomSelected.length == 1)
-                                    this.setState({ showModalPayment: true })
+                                // if (this.state.listBookRoomSelected.length == 1)
+                                this.setState({ showModalPayment: true })
+                                debugger
                             }}
                         >
                             <span className="toolbar-icon icon-double" />
@@ -409,6 +411,8 @@ class BookRoom extends React.Component {
                     {this.state.showModalDelete && <ModalDeleteBookRoom listBookRoom={this.state.listBookRoomSelected} loadPage={() => this.loadPage()} closeModal={() => this.setState({ showModalDelete: false })} />}
                     {/* {this.state.showModalDetail && <ModalDetailBookRoom listBookRoom={this.state.listBookRoomSelected} closeModal={() => this.setState({ showModalDetail: false })} />}
                     {this.state.showModalUpdate && <ModalUpdateBookRoom listBookRoom={this.state.listBookRoomSelected} loadPage={() => this.loadPage()} closeModal={() => this.setState({ showModalUpdate: false })} />} */}
+                     {this.state.showModalPayment && <ModalAddPayment listBookRoom={this.state.listBookRoomSelected} loadPage={() => this.loadPage()} closeModal={() => this.setState({ showModalPayment: false })} />}
+                    
                 </div>
             </div >
         )

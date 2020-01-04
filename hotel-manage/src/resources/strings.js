@@ -80,6 +80,8 @@ module.exports = {
             getDetail: hotel_service + '/Device/detail'
         }, payment :{
             getAll: hotel_service + '/Payment/all',
+            create: hotel_service + '/Payment/create',
+
         },
         employee:{
             getAll: hotel_service + '/employee/all'

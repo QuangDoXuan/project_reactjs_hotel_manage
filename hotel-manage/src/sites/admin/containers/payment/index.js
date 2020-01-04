@@ -60,9 +60,9 @@ class Payment extends React.Component {
         console.log(this.state.data)
     }
 
-    loadPage() {
+    async loadPage() {
+        await this.getBookRoomByPageOnSearch();
         this.getAllPayment();
-        this.getBookRoomByPageOnSearch();
     }
 
     getAllPayment() {
@@ -294,12 +294,10 @@ class Payment extends React.Component {
                                 render={(text, record, index) => text}
                             />
                             <Column title="Mã đặt phòng" dataIndex="BookRoomID" key="BookRoomID" align={'Left'}
-                                render={(text, record, index) => 
-                                    // console.log(this.state.listBookRoom.filter(v => v.BookRoomID == text));
-                                    this.state.listBookRoom.filter(v => v.BookRoomID == text)[0].BookRoomNo
+                                render={(text, record, index) =>
+                                    this.state.listBookRoom.filter(v => v.BookRoomID == record.BookRoomID)[0] ? this.state.listBookRoom.filter(v => v.BookRoomID == record.BookRoomID)[0].BookRoomNo : ''
                                 }
                             />
-
                         </Table>
                     </Spin>
                     {/* 
@@ -308,14 +306,11 @@ class Payment extends React.Component {
                     {this.state.showModalDetail && <ModalDetailRoom listRoom={this.state.listRoomSelected} closeModal={() => this.setState({ showModalDetail: false })} />}
                     {this.state.showModalUpdate && <ModalUpdateRoom listRoom={this.state.listRoomSelected} loadPage={() => this.loadPage()} closeModal={() => this.setState({ showModalUpdate: false })} />}
  */}
-
                 </div>
-
             </div >
         )
     }
 }
-
 const styles = theme => ({
     root: {
         width: '100%',
@@ -324,6 +319,4 @@ const styles = theme => ({
         maxHeight: 440,
     },
 });
-
-
 export default withStyles(styles)(Payment)
