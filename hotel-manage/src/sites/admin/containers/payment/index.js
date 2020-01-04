@@ -291,7 +291,7 @@ class Payment extends React.Component {
                                 render={(text, record, index) => moment(text).format('DD-MM-YYYY')}
                             />
                             <Column title="Tổng tiền" dataIndex="TotalCost" key="TotalCost" align={'Left'}
-                                render={(text, record, index) => text}
+                                render={(text, record, index) => text.toFixed(1).replace(/\d(?=(\d{3})+\.)/g, '$&,') + 'VNĐ'}
                             />
                             <Column title="Mã đặt phòng" dataIndex="BookRoomID" key="BookRoomID" align={'Left'}
                                 render={(text, record, index) =>
