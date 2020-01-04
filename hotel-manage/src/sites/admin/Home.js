@@ -200,10 +200,10 @@ class Home extends Component {
                                 },
                                 )}
                             </Switch>
-                            {/* {
+                            {
                                 (!this.props.userApp.currentUser) &&
                                 <Redirect to="/dang-nhap" component={Login} />
-                            } */}
+                            }
 
                             {/* <Redirect from="/admin" to="/admin/dashboard" /> */}
                         </Container>

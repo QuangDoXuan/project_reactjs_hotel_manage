@@ -64,6 +64,12 @@ module.exports = {
             update:hotel_service + '/Customer/update',
             search: hotel_service +'/Customer/search',
             delete: hotel_service + '/Customer/deletes'
+        }, bookroom:{
+            getAll : hotel_service + '/BookRoom/all',
+            getPerMonth: hotel_service + '/getpermonth'
+        },
+        employee:{
+            getAll: hotel_service + '/employee/all'
         }
         
     }
